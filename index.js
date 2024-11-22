@@ -7,14 +7,12 @@ async function checkCSPViolations(urls) {
   const cspViolations = [];
 
   for (const url of urls) {
-    console.log("fetching :", url);
-
+    console.log("fetching url:", url);
     try {
       const page = await browser.newPage();
 
       // Collect CSP violations
       page.on("console", (msg) => {
-        console.log(msg.text());
         if (msg.text().includes("Refused to")) {
           cspViolations.push({
             url: url,
